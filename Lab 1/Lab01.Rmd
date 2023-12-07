@@ -1,0 +1,328 @@
+---
+title: "Lab01"
+author: "Siddhartha Sinha"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# AIM: To calculate the sampling distribution and the standard error
+
+# DATASET:
+```{r}
+iris
+```
+## DATASET DESCRIPTION:
+This famous Fisher's or Anderson's iris data set gives the measurements in centimeters of the variables sepal length, sepal width, petal length and petal width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, Iris versicolor, and Iris virginica.
+
+## DATASET VISUALIZATION USING A VARIABLE:
+```{r}
+i=iris
+print(i)
+```
+Here we named our iris dataset by a variable 'i' and thus visualized the whole dataset.
+
+# DIMENSION OF THE DATASET:
+```{r}
+dim(i)
+```
+Here we can see that our dataset has 150 rows and 5 columns.
+
+# FIRST 6 OBSERVATIONS:
+```{r}
+head(iris)
+```
+Here we can see the first 6 observations of the iris dataset.
+
+# LAST 6 OBSERVATIONS:
+```{r}
+tail(iris)
+```
+Here we can see the last 6 observations of the iris dataset.
+
+# DESCRIPTIVE STATISTICS:
+
+## SUMMARY OF THE DATASET:
+```{r}
+summary(iris)
+```
+Here we can see the minimum value, the first quartile, median (second quartile), third quartile , mean and the maximum value of each of the 5 columns of the dataset. 
+Let our target variable be "sepal length". Thus we can see the value of our target variable ranges from 4.3cm to 7.9cm.
+
+## MEAN OF OUR TARGET VARIABLE:
+```{r}
+mean(iris$Sepal.Length)
+```
+Thus we can see the average length of our target variable is 5.843cm.
+
+## STANDARD DEVIATION OF OUR TARGET VARIABLE:
+```{r}
+sd(iris$Sepal.Length)
+```
+Thus the standard deviation of our target variable is 0.828. A standard deviation close to zero indicates that data points are close to the mean. Here, the standard deviation obtained is 0.828 which indicates that the data points are close to mean.
+
+# VISUALIZING THE DISTRIBUTION OF OUR TARGET VARIABLE:
+```{r}
+hist(iris$Sepal.Length, xlab="Sepal Length", main="Histogram of Sepal Length",  density = 40)
+```
+
+# POPULATION:
+```{r}
+population=iris$Sepal.Length
+population
+```
+Here we can clearly see all the 150 observations of our target variable from the dataset.
+
+# SAMPLE 01:
+```{r}
+samplesize=15 # choosing 15 observations from the dataset
+s1=sample(population, 15, replace=TRUE) # choosing a sample of size 15 from the population using simple random sampling with replacement technique
+s1
+```
+Here we can the see the 15 samples chosen by simple random sampling with replacement technique from the population of 150.
+
+## MEAN OF SAMPLE 01:
+```{r}
+mean(s1)
+```
+Here we can see the mean of our 15 samples.
+
+## STANDARD DEVIATION OF SAMPLE 01:
+```{r}
+sd(s1)
+```
+Here we can see the standard deviation of our 15 samples.
+
+# SAMPLE 02:
+```{r}
+samplesize=10 # choosing 10 observations from the dataset
+s2=sample(population, samplesize, replace=TRUE) # choosing a sample of size 10 from the population using simple random sampling with replacement technique
+s2
+```
+Here we can the see the 10 samples chosen by simple random sampling with replacement technique from the population of 150.
+
+## MEAN OF SAMPLE 02:
+```{r}
+mean(s2)
+```
+Here we can see the mean of our 10 samples.
+
+## STANDARD DEVIATION OF SAMPLE 02:
+```{r}
+sd(s2)
+```
+Here we can see the standard deviation of our 10 samples.
+
+# SAMPLING DISTRIBUTION:
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 15 WITHOUT REPLICATION:
+```{r}
+hist(s1,xlab="Sepal Length", main="Sampling Distribution of Sepal Length", col="pink") # Finding how it is distributed using histogram
+```
+We can observe that this graph doesn't give a great idea about how the sample is distributed, we thus use replicate function to replicate the statistic. "replicate()" function in R Programming Language is used to evaluate an
+expression N number of times repeatedly. Here, it is replicated 1000 times.
+
+## FINDING SAMPLING DISTRIBUTION OF SAMPLE SIZE 15 WITH REPLICATION:
+```{r}
+samp_dist1= replicate(1000, mean(sample(iris$Sepal.Length, 15, replace=TRUE)))
+samp_dist1
+```
+Now we have successfully replicated a 1000 times the process of randomly selecting 15 samples from the 150 population.
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 15 WITH REPLICATION:
+```{r}
+hist(samp_dist1, xlab="Sepal Length", main="Sampling distribution of Sepal Length", col="red") # Finding how it is distributed using histogram
+```
+Now we have a proper idea about how the histogram is distributed.
+
+## FINDING VARIANCE OF THE SAMPLING DISTRIBUTION OF SAMPLE SIZE 15:
+```{r}
+var(samp_dist1)
+```
+Thus, we get the variance of the sampling distribution of sample size 15.
+
+## STANDARD ERROR OF SAMPLE SIZE 15:
+```{r}
+# Method 1:
+sd(samp_dist1)
+# Method 2:
+a=sample(iris$Sepal.Length, 15, replace = TRUE)
+b=sd(a)/sqrt(15)
+b
+```
+Here, we can see Method 1 is the best standard error as it yields a result closer to 0 than Method 2.
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 10 WITHOUT REPLICATION:
+```{r}
+hist(s2,xlab="Sepal Length", main="Sampling Distribution of Sepal Length", col="cyan") # Finding how it is distributed using histogram
+```
+We can observe that this graph doesn't give a great idea about how the sample is distributed, we thus use replicate function to replicate the statistic. "replicate()" function in R Programming Language is used to evaluate an
+expression N number of times repeatedly. Here, it is replicated 1000 times.
+
+## FINDING SAMPLING DISTRIBUTION OF SAMPLE SIZE 10 WITH REPLICATION:
+```{r}
+samp_dist2= replicate(1000, mean(sample(iris$Sepal.Length, 10, replace=TRUE)))
+samp_dist2
+```
+Now we have successfully replicated a 1000 times the process of randomly selecting 10 samples from the 150 population.
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 10 WITH REPLICATION:
+```{r}
+hist(samp_dist2, xlab="Sepal Length", main="Sampling distribution of Sepal Length", col="blue") # Finding how it is distributed using histogram
+```
+Now we have a proper idea about how the histogram is distributed.
+
+## FINDING VARIANCE OF THE SAMPLING DISTRIBUTION OF SAMPLE SIZE 10:
+```{r}
+var(samp_dist2)
+```
+Thus, we get the variance of the sampling distribution of sample size 10.
+
+## STANDARD ERROR OF SAMPLE SIZE 10:
+```{r}
+# Method 1:
+sd(samp_dist2)
+# Method 2:
+c=sample(iris$Sepal.Length, 10, replace = TRUE)
+d=sd(c)/sqrt(10)
+d
+```
+Here, we can see Method 1 is the best standard error as it yields a result closer to 0 than Method 2.
+
+# CONCLUSION:
+We can clearly conclude that when we select a sample size of 15 we get the standard error much closer to 0 than when we select a sample size of 10. Thus, it can be concluded that larger the sample size better is the standard error. Lets do further exploration to validate this claim.
+
+# FURTHER EXPLORATION:
+
+# POPULATION:
+```{r}
+population=iris$Sepal.Length
+population
+```
+Here we can clearly see all the 150 observations of our target variable from the dataset.
+
+# SAMPLE 03:
+```{r}
+samplesize=50 # choosing 50 observations from the dataset
+s3=sample(population,samplesize,replace = TRUE) # choosing a sample of size 50 from the population using simple random sampling with replacement technique
+s3
+```
+Here we can the see the 50 samples chosen by simple random sampling with replacement technique from the population of 150.
+
+## MEAN OF SAMPLE 03:
+```{r}
+mean(s3)
+```
+Here we can see the mean of our 50 samples.
+
+## STANDARD DEVIATION OF SAMPLE 03:
+```{r}
+sd(s3)
+```
+Here we can see the standard deviation of our 50 samples.
+
+# SAMPLING DISTRIBUTION:
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 50 WITHOUT REPLICATION:
+
+```{r}
+hist(s3, xlab="Sepal Length", main="Sampling Distribution of Sepal Length", col="yellow")
+```
+We can observe that this graph doesn't give a great idea about how the sample is distributed, we thus use replicate function to replicate the statistic. "replicate()" function in R Programming Language is used to evaluate an
+expression N number of times repeatedly. Here, it is replicated 1000 times.
+
+## FINDING SAMPLING DISTRIBUTION OF SAMPLE SIZE 50 WITH REPLICATION:
+```{r}
+samp_dist3=replicate(1000, mean(sample(iris$Sepal.Length, 50, replace = TRUE)))
+samp_dist3
+```
+Now we have successfully replicated a 1000 times the process of randomly selecting 50 samples from the 150 population.
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 15 WITH REPLICATION:
+```{r}
+hist(samp_dist3, xlab="Sepal Length", main="Sampling distribution of Sepal Length", col="orange") # Finding how it is distributed using histogram
+```
+Now we have a proper idea about how the histogram is distributed.
+
+## FINDING VARIANCE OF THE SAMPLING DISTRIBUTION OF SAMPLE SIZE 50:
+```{r}
+var(samp_dist3)
+```
+Thus, we get the variance of the sampling distribution of sample size 50.
+
+## STANDARD ERROR OF SAMPLE SIZE 50:
+```{r}
+# Method 1
+sd(samp_dist3)
+# Method 2
+p=sample(iris$Sepal.Length, 50, replace = TRUE)
+q=sd(p)/sqrt(50)
+q
+```
+Here, we can see Method 1 is the best standard error as it yields a result closer to 0 than Method 2.
+
+# SAMPLE 04:
+```{r}
+samplesize=100 # choosing 100 observations from the dataset
+s4=sample(population,samplesize,replace = TRUE) # choosing a sample of size 100 from the population using simple random sampling with replacement technique
+s4
+```
+Here we can the see the 100 samples chosen by simple random sampling with replacement technique from the population of 150.
+
+## MEAN OF SAMPLE 04:
+```{r}
+mean(s4)
+```
+Here we can see the mean of our 100 samples.
+
+## STANDARD DEVIATION OF SAMPLE 04:
+```{r}
+sd(s4)
+```
+Here we can see the standard deviation of our 100 samples.
+
+# SAMPLING DISTRIBUTION:
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 50 WITHOUT REPLICATION:
+
+```{r}
+hist(s4, xlab="Sepal Length", main="Sampling Distribution of Sepal Length", col="#90EE90")
+```
+We can observe that this graph doesn't give a great idea about how the sample is distributed, we thus use replicate function to replicate the statistic. "replicate()" function in R Programming Language is used to evaluate an
+expression N number of times repeatedly. Here, it is replicated 1000 times.
+
+## FINDING SAMPLING DISTRIBUTION OF SAMPLE SIZE 50 WITH REPLICATION:
+```{r}
+samp_dist4=replicate(1000, mean(sample(iris$Sepal.Length, 100, replace = TRUE)))
+samp_dist4
+```
+Now we have successfully replicated a 1000 times the process of randomly selecting 100 samples from the 150 population.
+
+## VISUALIZING SAMPLING DISTRIBUTION OF SAMPLE SIZE 15 WITH REPLICATION:
+```{r}
+hist(samp_dist4, xlab="Sepal Length", main="Sampling distribution of Sepal Length", col="#00FF00") # Finding how it is distributed using histogram
+```
+
+Now we have a proper idea about how the histogram is distributed.
+
+## FINDING VARIANCE OF THE SAMPLING DISTRIBUTION OF SAMPLE SIZE 100:
+```{r}
+var(samp_dist4)
+```
+Thus, we get the variance of the sampling distribution of sample size 100.
+
+## STANDARD ERROR OF SAMPLE SIZE 100:
+```{r}
+# Method 1
+sd(samp_dist4)
+# Method 2
+u=sample(iris$Sepal.Length, 100, replace = TRUE)
+v=sd(u)/sqrt(100)
+v
+```
+Here, we can see Method 1 is the best standard error as it yields a result closer to 0 than Method 2.
+
+# FINAL CONCLUSION:
+When we select a larger sample size the standard error gets more and more closer to 0. This claim is validated with proper relevant results from the standard error calculation of different sample sizes of 10, 15, 50 and 100, with sample size 10 giving the standard error furthest from 0 while sample size 100 giving the standard error closest to 0. 

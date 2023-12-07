@@ -1,0 +1,84 @@
+---
+title: "Class_02"
+author: "Siddhartha Sinha"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## AIM: Test for single mean
+
+## DATASET:
+```{r}
+insurance
+```
+
+```{r}
+head(insurance)
+```
+```{r}
+tail(insurance)
+```
+```{r}
+dim(insurance)
+```
+```{r}
+summary(insurance)
+```
+```{r}
+population = insurance$charges
+population
+```
+```{r}
+mean(population)
+```
+```{r}
+sd(population)
+```
+```{r}
+samplesize=100
+s=sample(population, samplesize, replace=FALSE)
+s
+```
+# Z TEST
+
+```{r}
+library("BSDA")
+```
+
+```{r}
+sd_ins = sd(insurance$charges)
+sd_ins
+```
+```{r}
+s=sample(insurance$charges, 100, replace = FALSE)
+s
+```
+# TWO SIDED
+## To test whether the average cost is equal to Rs. 10000 or not
+H0: mean = 10000
+H1: mean != 10000
+
+```{r}
+z.test (x=s, alternative = "two.sided", mu=10000, sigma.x = sd(insurance$charges), conf.level = 0.95)
+```
+
+# ONE SIDED
+## To test whether the average cost is less than Rs. 10000 or not
+H0: mean = 10000
+H1: mean < 10000
+
+```{r}
+z.test (x=s, alternative = "less", mu=10000, sigma.x = sd(insurance$charges), conf.level = 0.95)
+```
+# ONE SIDED
+## To test whether the average cost is greater than Rs. 10000 or not
+H0: mean = 10000
+H1: mean > 10000
+
+```{r}
+z.test (x=s, alternative = "greater", mu=10000, sigma.x = sd(insurance$charges), conf.level = 0.95)
+```

@@ -1,0 +1,103 @@
+---
+title: "Lab02"
+author: "Siddhartha Sinha"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# AIM: Testing of hypothesis for population mean when sd is known, i.e, Z TEST
+
+# DATASET:
+```{r}
+netflix_dataset <- read.csv("C:/Users/Siddhartha/Desktop/Data Science/PRACTICALS/MScDSB-MDS272-23122133-Siddhartha/Lab 2/netflix_dataset.csv")
+```
+Here, we imported the external data set in csv format.
+
+## DATASET DESCRIPTION:
+
+## DIMENSION OF THE DATASET:
+```{r}
+dim(netflix_dataset)
+```
+
+## TOP 6 OBSERVATIONS:
+```{r}
+head(netflix_dataset)
+```
+Here we can see the top 6 rows of the data set.
+
+## BOTTOM 6 OBSERVATIONS:
+```{r}
+tail(netflix_dataset)
+```
+Here we can see the bottom 6 rows of the data set.
+
+# DESCRIPTIVE STATISTICS:
+
+## SUMMARY OF THE DATASET:
+```{r}
+summary(netflix_dataset)
+```
+Here we can see that we have the minimum value, the first quartile, the second quartile (i.e, the median), the third quartile, the maximum value and the mean for each of the columns having numerical values.
+
+# POPULATION:
+```{r}
+population = netflix_dataset$imdb_score
+population
+```
+Here we defined our population in the imported data set where our target varaible is "imdb_score".
+
+## MEAN OF POPULATION:
+```{r}
+mean(population)
+```
+Here we can see we have the mean imdb score is 6.533447.
+
+## SD OF POPULATION:
+```{r}
+sd(population)
+```
+Here we have the sd of imdb score as 1.160932.
+
+# SAMPLE:
+```{r}
+s = sample(population, 100, replace = FALSE)
+s
+```
+Here we take 100 imdb scores from the population of 5283 imdb scores in a without replacement procedure.
+
+# IMPORTING LIBRARY:
+```{r}
+library('BSDA')
+```
+Here we install the BSDA (Basic Statistics and Data Analysis) package.
+
+# Z TEST
+
+## TO TEST WHETHER MEAN IS EQUAL TO 7 OR NOT:
+H0: mean=7
+H1: mean!=7
+```{r}
+z.test (x=s, alternative = "two.sided", mu=7, sigma.x = sd(population), conf.level = 0.95)
+```
+Here we tried to do a two tailed Z-test where our null hypothesis is mean equal to 7 and our alternative hypothesis is mean not equal to 7. After proceeding with the test, we can see that our p value is less than 0.05, thus, we reject the null hypothesis as there is enough evidence to suggest a significant difference.
+
+## TO TEST WHETHER MEAN IS LESS THAN 7 OR NOT:
+H0: mean=7
+H1: mean<7
+```{r}
+z.test (x=s, alternative = "less", mu=7, sigma.x = sd(population), conf.level = 0.95)
+```
+Here we tried to do a one tailed Z-test where our null hypothesis is mean equal to 7 and our alternative hypothesis is mean less than 7. After proceeding with the test, we can see that our p value is less than 0.05, thus, we reject the null hypothesis as there is enough evidence to suggest a significant difference.
+
+## TO TEST WHETHER MEAN IS GREATER THAN 7 OR NOT:
+H0: mean=7
+H1: mean>7
+```{r}
+z.test (x=s, alternative = "greater", mu=7, sigma.x = sd(population), conf.level = 0.95)
+```
+Here we tried to do a one tailed Z-test where our null hypothesis is mean equal to 7 and our alternative hypothesis is mean greater than 7. After proceeding with the test, we can see that our p value is greater than 0.05, thus, we accept the null hypothesis as there is not enough evidence to suggest a significant difference.

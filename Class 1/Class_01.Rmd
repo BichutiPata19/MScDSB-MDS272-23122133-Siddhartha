@@ -1,0 +1,107 @@
+---
+title: "Class01"
+author: "Siddhartha Sinha"
+date: "2023-11-20"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## AIM: To calculate the sampling distribution and the standard error
+
+## Dataset: 
+
+```{r}
+cars
+```
+```{r}
+tail(cars)
+```
+
+
+```{r}
+head(cars)
+```
+```{r}
+c = cars
+```
+
+
+```{r}
+print(c)
+```
+```{r}
+dim(cars)
+```
+```{r}
+summary(cars)
+```
+```{r}
+hist(cars$speed, xlab="Speed", main="Histogram of Speed", col="blue")
+hist(cars$dist, xlab="Distance", main="Histogram of Distance", col="yellow")
+```
+```{r}
+sd(cars$speed)
+```
+```{r}
+population=cars$speed
+samplesize=20
+s=sample(population,samplesize,replace = FALSE)
+mean(s)
+var(s)
+hist(s, col="orange")
+samp_dist = replicate(1000, mean(sample(cars$speed, 20, replace = FALSE)))
+samp_dist
+# best se
+sd(samp_dist)
+# se
+print(sd(cars$speed)/sqrt(samplesize))
+```
+
+```{r}
+population=cars$speed
+samplesize=50
+s=sample(population,samplesize,replace = FALSE)
+mean(s)
+var(s)
+hist(s, col="red")
+samp_dist = replicate(2000, mean(sample(cars$speed, 50, replace = FALSE)))
+samp_dist
+# best se
+sd(samp_dist)
+# se
+print(sd(cars$speed)/sqrt(samplesize))
+```
+
+```{r}
+population=cars$speed
+samplesize = 10
+m=sample(population,samplesize,replace = TRUE)
+mean(m)
+var(m)
+hist(m, col="cyan")
+samp_dist = replicate(1000, mean(sample(cars$speed, 10, replace = TRUE)))
+samp_dist
+# best se
+sd(samp_dist)
+# se
+print(sd(cars$speed)/sqrt(samplesize))
+```
+```{r}
+population=cars$speed
+samplesize = 50
+m=sample(population,samplesize,replace = TRUE)
+mean(m)
+var(m)
+hist(m, col="blue")
+samp_dist = replicate(1000, mean(sample(cars$speed, 50, replace = TRUE)))
+samp_dist
+# best se
+sd(samp_dist)
+# se
+print(sd(cars$speed)/sqrt(samplesize))
+```
+
+
+
