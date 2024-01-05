@@ -1,0 +1,95 @@
+---
+title: "Lab05"
+author: "Siddhartha Sinha"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+# AIM: Test of equality of two population proportion
+
+# INTRODUCTION:
+The data set contains information about students, including their race, family background, lunch status and academic performances. The focus here is on exploring the gender distribution within a subset of this data.
+The analysis involves sampling 100 students and assessing the proportion of males within this sample. A hypothesis test is performed to evaluate whether this sample proportion is significantly different from the assumed population proportion.
+
+
+# DATASET:
+```{r}
+library(readxl)
+StudentsPerformance <- read_excel("C:/Users/Siddhartha/Downloads/StudentsPerformance.xls")
+```
+Here we imported the data set.
+
+```{r}
+head(StudentsPerformance)
+```
+
+
+```{r}
+tail(StudentsPerformance)
+```
+
+
+```{r}
+dim(StudentsPerformance)
+```
+
+
+```{r}
+summary(StudentsPerformance)
+```
+
+
+# CREATING TWO POPULATIONS:
+
+```{r}
+# POPULATION 1:
+MALE <- subset(StudentsPerformance, gender == "male")
+MALE
+```
+
+
+```{r}
+# POPULATION 2:
+FEMALE <- subset(StudentsPerformance, gender == "female")
+FEMALE
+```
+
+
+# IMPORTING THE LIBRARY:
+```{r}
+library(dplyr)
+```
+
+
+# TAKING THE SAMPLE:
+```{r}
+s = sample(FEMALE$`test preparation course`, 100, replace = FALSE)
+S1 = as.data.frame(s)
+
+ss = sample(MALE$`test preparation course`, 100, replace = FALSE)
+S2 = as.data.frame(ss)
+
+count(S1, s)
+count(S2, ss)
+```
+
+
+# TESTING THE HYPOTHESIS:
+
+Po: proportion of "COMPLETED" Male test preparation course 
+P1: proportion of "COMPLETED" Female test preparation course 
+Assume the population proportion:
+H0: Po = P1 vs H1: Po != P1
+Success = 30 completed test preparation course in Female;
+Success = 20 completed test preparation course in Male.
+```{r}
+x1=c(30,20)
+n1=c(100,100)
+
+prop.test(x1, n1, alternative = "two.sided", conf.level = 0.95)
+```
+The analysis utilized a sample of 100 observations for both male and female students' activities. The count within each sample revealed that 20 out of 100 male students and 30 out of 100 female students reported completing test preparation course.
+Upon performing a two-sample test for equality of proportions with a significance level of 0.05, the p-value obtained was 0.1548. This p-value exceeds the significance level, indicating that there isn't sufficient evidence to reject the null hypothesis. Consequently, we fail to find significant differences in the proportions of male and female students engaging in completing the test preparation course within this sample.
+Therefore, based on this analysis, we do not have enough evidence to conclude that there's a significant difference in test preparation course between male and female students in this specific dataset and population.
+
+

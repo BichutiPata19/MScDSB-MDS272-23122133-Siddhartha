@@ -1,0 +1,75 @@
+---
+title: "Lab04"
+author: "Siddhartha Sinha"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+# AIM: Test for proportion of single population using Prop Test and Binom Test
+
+# INTRODUCTION: 
+The data set contains information about students, including their race, family background, lunch status and academic performances. The focus here is on exploring the gender distribution within a subset of this data.
+The analysis involves sampling 100 students and assessing the proportion of males within this sample. A hypothesis test is performed to evaluate whether this sample proportion is significantly different from the assumed population proportion.
+
+# DATASET: 
+```{r}
+library(readxl)
+StudentsPerformance <- read_excel("C:/Users/Siddhartha/Downloads/StudentsPerformance.xls")
+```
+Here we imported the data set 
+
+```{r}
+head(StudentsPerformance)
+```
+Here we obtained the first six rows from our StudentsPerformance data set.
+
+```{r}
+tail(StudentsPerformance)
+```
+Here we obtained the last six rows from our StudentsPerformance data set.
+
+```{r}
+dim(StudentsPerformance)
+```
+Here we can see that our data set contains 1000 rows and 8 columns.
+
+```{r}
+summary(StudentsPerformance)
+```
+Here we can see the minimum value, the first quartile, median (second quartile), third quartile , mean and the maximum value of each of the 8 columns of the data set.
+
+```{r}
+library(dplyr)
+```
+Here we install the "dplyr" (data set plier) package for making data manipulation easier
+
+```{r}
+s = sample(1:nrow(StudentsPerformance), 100, replace = FALSE)
+new = StudentsPerformance[s,]
+count_val = count(new, gender)
+count_val
+```
+Here we get 100 samples using the 
+
+```{r}
+class(new)
+```
+
+
+# SETTING THE HYPOTHESIS:
+
+Po: Proportion of Sex Male 
+Assume, the population proportion
+H0: Po = 0.50 vs H1: Po != 0.50
+```{r}
+x=41
+n=100
+prop.test(x, n, p = 0.50, alternative = "two.sided", conf.level = 0.95)
+```
+
+
+
+
+
+
+
